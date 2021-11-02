@@ -2,4 +2,20 @@
 
 {% block body %}
     <h1>All Posts</h1>
+    {% if user.is_authenticated %}
+        <div class="border border-success" style="margin: 10px 10px 10px 10px;">
+            <div style="margin: 10px 10px 10px 10px;">
+                <h3>New Post</h3>
+                <form action="{% url 'index' %}" method="POST">
+                    {% csrf_token %} 
+                    <div class="form-group">
+                        {{ postform.as_p }}
+                    </div>
+                    <input class="btn btn-success" type="Submit" value="Post">
+                </form>
+            </div>
+
+        </div>
+    {% endif %}
+    
 {% endblock %}

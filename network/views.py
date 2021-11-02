@@ -3,8 +3,9 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
-from .models import User
+from datetime import datetime
+from .forms import PostForm
+from .models import User,NewPost
 
 
 def index(request):
@@ -61,3 +62,24 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def NewPostMaker(request):
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            postform = PostForm(request.POST)
+            user = request.user
+            timestamp = datetime.now()
+
+            if postform.is_valid():
+                post = postform.save(commit=False)
+                postdata = NewPost(post=post,user=user,timestamp=timestamp)
+                postdata.save()
+
+
+    else:
+        postform = PostForm()
+
+    return render(request,"network/index.html",{
+        "postform" : postform
+    })
