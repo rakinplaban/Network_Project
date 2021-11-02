@@ -6,10 +6,10 @@
         <div class="border border-success" style="margin: 10px 10px 10px 10px;">
             <div style="margin: 10px 10px 10px 10px;">
                 <h3>New Post</h3>
-                <form action="{% url 'index' %}" method="POST">
+                <form action="{% url 'post' %}" method="POST">
                     {% csrf_token %} 
                     <div class="form-group">
-                        {{ postform.as_p }}
+                        <textarea name="post" class="form-control" cols="30" rows="5" placeholder="What is in your mind? "></textarea>
                     </div>
                     <input class="btn btn-success" type="Submit" value="Post">
                 </form>

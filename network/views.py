@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from datetime import datetime
-from .forms import PostForm
+
 from .models import User,NewPost
 
 
@@ -67,19 +67,14 @@ def register(request):
 def NewPostMaker(request):
     if request.method == "POST":
         if request.user.is_authenticated:
-            postform = PostForm(request.POST)
+            post = request.POST["post"]
             user = request.user
             timestamp = datetime.now()
+            postdata = NewPost(post=post,user=user,timestamp=timestamp)
+            postdata.save()
 
-            if postform.is_valid():
-                post = postform.save(commit=False)
-                postdata = NewPost(post=post,user=user,timestamp=timestamp)
-                postdata.save()
-
-
-    else:
-        postform = PostForm()
-
-    return render(request,"network/index.html",{
-        "postform" : postform
-    })
+        return render(request,"network/index.html",{
+            "post" : post,
+            "user" : user,
+            "timestamp" : timestamp
+        })
