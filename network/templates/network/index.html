@@ -10,7 +10,8 @@
                     <form action="{% url 'index' %}" method="POST">
                         {% csrf_token %} 
                         <div class="form-group">
-                            <textarea name="post" class="form-control" cols="30" rows="5" placeholder="What is in your mind? "></textarea>
+                            <!-- <textarea name="post" class="form-control" cols="30" rows="5" placeholder="What is in your mind? "></textarea> -->
+                            {{ post.as_table }}
                         </div>
                         <input class="btn btn-success" type="Submit" value="Post">
                     </form>
