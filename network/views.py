@@ -9,7 +9,25 @@ from .models import User,NewPost
 
 
 def index(request):
-    return render(request, "network/index.html")
+    posts = NewPost.objects.all()
+    
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            post = request.POST["post"]
+            user = request.user
+            timestamp = datetime.now()
+            postdata = NewPost(post=post,user=user,timestamp=timestamp)
+            postdata.save()
+
+            return render(request,"network/index.html",{
+                "post" : post,
+                "user" : user,
+                "timestamp" : timestamp
+            })
+
+    return render(request,"network/index.html",{
+        "posts" : posts
+    })
 
 
 def login_view(request):
@@ -64,17 +82,30 @@ def register(request):
         return render(request, "network/register.html")
 
 
-def NewPostMaker(request):
-    if request.method == "POST":
-        if request.user.is_authenticated:
-            post = request.POST["post"]
-            user = request.user
-            timestamp = datetime.now()
-            postdata = NewPost(post=post,user=user,timestamp=timestamp)
-            postdata.save()
+# def NewPostMaker(request):
+#     posts = NewPost.objects.all()
+    
+#     if request.method == "POST":
+#         if request.user.is_authenticated:
+#             post = request.POST["post"]
+#             user = request.user
+#             timestamp = datetime.now()
+#             postdata = NewPost(post=post,user=user,timestamp=timestamp)
+#             postdata.save()
 
-        return render(request,"network/index.html",{
-            "post" : post,
-            "user" : user,
-            "timestamp" : timestamp
-        })
+#         return render(request,"network/index.html",{
+#             "post" : post,
+#             "user" : user,
+#             "timestamp" : timestamp
+#         })
+
+#     return render(request,"network/index.html",{
+#         "posts" : posts
+#     })
+
+# def viewposts(request):
+#     posts = NewPost.objects.all()
+
+#     return render(request,"network/index.html",{
+#         "posts" : posts,
+#     })

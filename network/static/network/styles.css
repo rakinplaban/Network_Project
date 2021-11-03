@@ -6,3 +6,11 @@
 .formview{
     margin: 10px 10px 10px 10px;
 }
+
+#posts{
+    margin: 10px 10px 10px 10px;
+}
+
+#posts ul{
+    list-style: none;
+}
