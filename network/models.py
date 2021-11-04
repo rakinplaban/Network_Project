@@ -11,4 +11,4 @@ class NewPost(models.Model):
     timestamp = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return f"post : {post} || user: {user} || timestamp: {timestamp} "
+        return f"post : {self.post} || user: {self.user} || timestamp: {self.timestamp} "
