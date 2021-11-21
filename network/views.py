@@ -9,7 +9,7 @@ from .models import User,NewPost
 
 
 def index(request):
-    posts = NewPost.objects.all()
+    posts = NewPost.objects.all().order_by("-timestamp")
     
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -24,13 +24,15 @@ def index(request):
             return render(request,"network/index.html",{
                 "post" : post,
                 "user" : user,
+                "posts" : posts,
                 "timestamp" : timestamp
             })
 
         else:
             post = NewPostForm()
             return render(request,"network/index.html",{
-                "post" : post
+                "post" : post,
+                "posts" : posts
             })
 
     return render(request,"network/index.html",{
@@ -89,31 +91,5 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
-
-# def NewPostMaker(request):
-#     posts = NewPost.objects.all()
-    
-#     if request.method == "POST":
-#         if request.user.is_authenticated:
-#             post = request.POST["post"]
-#             user = request.user
-#             timestamp = datetime.now()
-#             postdata = NewPost(post=post,user=user,timestamp=timestamp)
-#             postdata.save()
-
-#         return render(request,"network/index.html",{
-#             "post" : post,
-#             "user" : user,
-#             "timestamp" : timestamp
-#         })
-
-#     return render(request,"network/index.html",{
-#         "posts" : posts
-#     })
-
-# def viewposts(request):
-#     posts = NewPost.objects.all()
-
-#     return render(request,"network/index.html",{
-#         "posts" : posts,
-#     })
+def profilepage(request,id):
+    profile = User.objects
