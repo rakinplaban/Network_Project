@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from datetime import datetime
 from .forms import NewPostForm
-from .models import User,NewPost
+from .models import User,NewPost,Profile
+import json
 
 
 def index(request):
@@ -24,9 +26,10 @@ def index(request):
             return render(request,"network/index.html",{
                 "post" : post,
                 "user" : user,
-                "posts" : posts,
+                # "posts" : posts,
                 "timestamp" : timestamp
             })
+            # JsonResponse(posts, safe=False)
 
         else:
             post = NewPostForm()
@@ -91,5 +94,14 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+
 def profilepage(request,id):
-    profile = User.objects
+    user = User.objects.get(pk=id)
+    profile = Profile.objects.filter(user = user)
+    posts = NewPost.objects.filter(user = user).order_by("-timestamp")
+    return render(request, "network/profile.html",{
+        "user" : user,
+        "profile" : profile,
+        "media_url" : settings.MEDIA_URL,
+        "posts" : posts
+    })
