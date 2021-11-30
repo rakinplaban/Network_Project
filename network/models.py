@@ -17,7 +17,7 @@ class NewPost(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    picture = models.ImageField(null=True,blank=True,upload_to="images/")
+    picture = models.ImageField(blank=True,null=True,upload_to="images/")
     follower = models.IntegerField(default=0)
     following = models.IntegerField(default = 0)
     # post = models.ForeignKey(NewPost,null = True ,on_delete=models.CASCADE)

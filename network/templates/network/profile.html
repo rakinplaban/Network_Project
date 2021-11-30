@@ -1,4 +1,5 @@
 {% extends 'network/layout.html' %}
+{% load static %}
 {% block title %} {{user}}'s profile {% endblock %} 
 
 {% block body %} 
@@ -6,7 +7,11 @@
     {% if user.is_authenticated %}
         <h1>Hi : {{ user }}</h1>
     {% endif %}
-    <img src="{{ user.profile.picture.url }}" alt="image not found." style="border-radius: 50%;" height="100px" width="100px">
+    {% if user.profile.picture %}
+        <img src="{{ user.profile.picture.url }}" alt="image not found." class="rounded-circle" height="100px" width="100px">
+    {% else %} 
+        <img src="{% static 'network/default.jpg' %}" alt="image not found." style="border-radius: 50%;" height="100px" width="100px">
+    {% endif %}
     <h6>Followers: {{user.profile.follower}}</h6>
     <h6>Following: {{user.profile.following}}</h6>
     <div style="margin: 10px 10px 10px 10px;">
