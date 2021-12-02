@@ -25,7 +25,7 @@
                     <ul>
                          <li class="card"> 
                             <div class="card-body">
-                                <h5 class="card-title">{{ posts.user }}</h5> 
+                                <h5 class="card-title"><a style="text-decoration: none;" href="{% url 'profile' posts.user.id %}">{{ posts.user }}</a></h5> 
                                 <h6 class="card-subtitle text-muted">{{ posts.timestamp }}</h6>
                                 <h3 class="card-text">{{ posts.post }}</h3>
                             </div>

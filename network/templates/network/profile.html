@@ -3,17 +3,57 @@
 {% block title %} {{user}}'s profile {% endblock %} 
 
 {% block body %} 
-    
-    {% if user.is_authenticated %}
+    <div style="margin-bottom: 2rem;"></div>
+    <div class="card border-secondary mb-2" style="margin-left: 30rem; max-width:18rem;">
+        {% if user.id is request.user.id %}
+            <h1 class="card-header d-inline p-2">Hi : {{ user }}</h1>
+        {% else %}
+            <h1 class="card-header d-inline p-2">{{ user }}</h1>
+        {% endif %}
+        <div class="card-body text-secondary">
+            <div class="d-block">
+                {% if user.profile.picture %}
+                    <img src="{{ user.profile.picture.url }}" alt="image not found." class="rounded-circle d-inline p-2" height="100px" width="100px">
+                {% else %} 
+                    <img src="{% static 'network/default.jpg' %}" alt="image not found." class="d-inline p-2" style="border-radius: 50%;" height="100px" width="100px">
+                {% endif %}
+            </div>
+
+            <div class="d-block">
+                <h4 class="card-title d-inline p-2 text-secondary">Name: {{user}}</h4>
+            </div>
+            {% if user.id is not request.user.id %}
+                <div class="d-block" style="margin: 8px 8px 8px 50px;">
+                    <button class="btn btn-outline-success">Follow</button>
+                </div>
+            {% endif %}
+            <div class="d-block">
+                <h6 class="d-inline p-2">Followers: {{user.profile.follower}}</h6>
+                <h6 class="d-inline p-2">Following: {{user.profile.following}}</h6>
+            </div>
+        </div>
+        
+    </div>
+    <!-- {% if user.id is request.user.id %}
         <h1>Hi : {{ user }}</h1>
-    {% endif %}
-    {% if user.profile.picture %}
-        <img src="{{ user.profile.picture.url }}" alt="image not found." class="rounded-circle" height="100px" width="100px">
-    {% else %} 
-        <img src="{% static 'network/default.jpg' %}" alt="image not found." style="border-radius: 50%;" height="100px" width="100px">
-    {% endif %}
-    <h6>Followers: {{user.profile.follower}}</h6>
-    <h6>Following: {{user.profile.following}}</h6>
+    {% endif %} -->
+    <!-- <div class="card">
+        <div class="d-block">
+            {% if user.profile.picture %}
+                <img src="{{ user.profile.picture.url }}" alt="image not found." class="rounded-circle" height="100px" width="100px">
+            {% else %} 
+                <img src="{% static 'network/default.jpg' %}" alt="image not found." style="border-radius: 50%;" height="100px" width="100px">
+            {% endif %}
+        </div>
+        
+        <div class="d-block">
+            <h6 class="d-inline p-2">Followers: {{user.profile.follower}}</h6>
+            <h6 class="d-inline p-2">Following: {{user.profile.following}}</h6>
+        </div>
+    </div>
+     -->
+    
+
     <div style="margin: 10px 10px 10px 10px;">
         <h1>Posts from {{ user }}</h1>
         <div id="posts" class="card">
@@ -22,7 +62,7 @@
                     <ul>
                          <li class="card"> 
                             <div class="card-body">
-                                <h5 class="card-title">{{ posts.user }}</h5> 
+                                <h5 class="card-title"><a style="text-decoration: none;" href="{% url 'profile' posts.user.id %}">{{ posts.user }}</a></h5> 
                                 <h6 class="card-subtitle text-muted">{{ posts.timestamp }}</h6>
                                 <h3 class="card-text">{{ posts.post }}</h3>
                             </div>
