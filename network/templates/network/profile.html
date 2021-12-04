@@ -24,11 +24,21 @@
             </div>
             {% if user.id is not request.user.id %}
                 <div class="d-block" style="margin: 8px 8px 8px 50px;">
-                    <button class="btn btn-outline-success">Follow</button>
+                    {% if is_following %}
+                        <form action="{% url 'removefollower' user.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-danger" type="submit">Unollow</button>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'addfollower' user.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-success" type="submit">Follow</button>
+                        </form>
+                    {% endif %}
                 </div>
             {% endif %}
             <div class="d-block">
-                <h6 class="d-inline p-2">Followers: {{user.profile.follower}}</h6>
+                <h6 class="d-inline p-2">Followers: {{all_followers}}</h6>
                 <h6 class="d-inline p-2">Following: {{user.profile.following}}</h6>
             </div>
         </div>

@@ -9,7 +9,7 @@ class Post_display(admin.ModelAdmin):
     list_display = ("id","post","user","timestamp")
 
 class Profile_display(admin.ModelAdmin):
-    list_display = ("id" , "user" , "picture" , "following", "follower")
+    list_display = ("id" , "user" , "picture",)
 
 admin.site.register(User,User_display)
 admin.site.register(NewPost,Post_display)

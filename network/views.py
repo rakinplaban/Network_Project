@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect 
 from django.urls import reverse
 from datetime import datetime
 from .forms import NewPostForm
@@ -98,10 +98,40 @@ def register(request):
 def profilepage(request,id):
     user = User.objects.get(pk=id)
     profile = Profile.objects.filter(user = user)
+    followers = user.profile.followers.all()
+    is_following = False
+    for follower in followers:
+        if follower == request.user:
+            is_following = True
+            break
+        else:
+            is_following = False
+    all_followers = len(followers)
     posts = NewPost.objects.filter(user = user).order_by("-timestamp")
     return render(request, "network/profile.html",{
         "user" : user,
         "profile" : profile,
+        "all_followers" : all_followers,
+        "is_following" : is_following,
         "media_url" : settings.MEDIA_URL,
         "posts" : posts
     })
+
+# def followerCount(request,id):
+#     profile = Profile.objects.get(pk = id)
+#     followers = profile.followers.all()
+#     all_followers = len(followers)
+
+def followersPeople(request,id):
+    user = User.objects.get(pk = id)
+    profile = Profile.objects.filter(user = user)
+    user.profile.followers.add(request.user)
+
+    return redirect('profile', id = id)
+
+def followersRemove(request,id):
+    user = User.objects.get(pk = id)
+    profile = Profile.objects.filter(user = user)
+    user.profile.followers.remove(request.user)
+
+    return redirect('profile', id = id)
