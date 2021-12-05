@@ -99,6 +99,7 @@ def profilepage(request,id):
     user = User.objects.get(pk=id)
     profile = Profile.objects.filter(user = user)
     followers = user.profile.followers.all()
+    followings = user.profile.followings.all()
     is_following = False
     for follower in followers:
         if follower == request.user:
@@ -106,13 +107,24 @@ def profilepage(request,id):
             break
         else:
             is_following = False
+
+    is_followed = False
+    for following in followings:
+        if following == request.user:
+            is_followed = True
+            break
+        else:
+            is_followed = False
     all_followers = len(followers)
+    all_following = len(followings)
     posts = NewPost.objects.filter(user = user).order_by("-timestamp")
     return render(request, "network/profile.html",{
         "user" : user,
         "profile" : profile,
         "all_followers" : all_followers,
         "is_following" : is_following,
+        "all_following" : all_following,
+        "is_followed" : is_followed,
         "media_url" : settings.MEDIA_URL,
         "posts" : posts
     })
@@ -126,6 +138,7 @@ def followersPeople(request,id):
     user = User.objects.get(pk = id)
     profile = Profile.objects.filter(user = user)
     user.profile.followers.add(request.user)
+    request.user.profile.followings.add(user)
 
     return redirect('profile', id = id)
 
@@ -133,5 +146,20 @@ def followersRemove(request,id):
     user = User.objects.get(pk = id)
     profile = Profile.objects.filter(user = user)
     user.profile.followers.remove(request.user)
+    request.user.profile.followings.remove(user)
 
     return redirect('profile', id = id)
+
+# def followingPeople(request,id):
+#     user = User.objects.get(pk = id)
+#     profile = Profile.objects.filter(user = user)
+#     user.profile.followering.add(request.user)
+
+#     return redirect('profile', id = id)
+
+# def followingRemove(request,id):
+#     user = User.objects.get(pk = id)
+#     profile = Profile.objects.filter(user = user)
+#     user.profile.followering.remove(request.user)
+
+#     return redirect('profile', id = id)

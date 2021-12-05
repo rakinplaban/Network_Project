@@ -29,6 +29,7 @@
                             {% csrf_token %}
                             <button class="btn btn-outline-danger" type="submit">Unollow</button>
                         </form>
+                        
                     {% else %}
                         <form action="{% url 'addfollower' user.id %}" method="POST">
                             {% csrf_token %}
@@ -39,7 +40,7 @@
             {% endif %}
             <div class="d-block">
                 <h6 class="d-inline p-2">Followers: {{all_followers}}</h6>
-                <h6 class="d-inline p-2">Following: {{user.profile.following}}</h6>
+                <h6 class="d-inline p-2">Following: {{all_following}}</h6>
             </div>
         </div>
         
