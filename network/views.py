@@ -150,16 +150,18 @@ def followersRemove(request,id):
 
     return redirect('profile', id = id)
 
-# def followingPeople(request,id):
-#     user = User.objects.get(pk = id)
-#     profile = Profile.objects.filter(user = user)
-#     user.profile.followering.add(request.user)
+def followerspost(request):
+    user = request.user
+    profile = Profile.objects.filter(user = user)
+    followings = user.profile.followings.all()
+    # for following in followings:
+    #     posts = NewPost.objects.filter(user = following)
 
-#     return redirect('profile', id = id)
+    posts = NewPost.objects.filter(user__in = followings).order_by("-timestamp")
 
-# def followingRemove(request,id):
-#     user = User.objects.get(pk = id)
-#     profile = Profile.objects.filter(user = user)
-#     user.profile.followering.remove(request.user)
-
-#     return redirect('profile', id = id)
+    return render(request,"network/following.html",{
+        "user" : user,
+        "profile" : profile,
+        "followings" : followings,
+        "posts" : posts,
+    })

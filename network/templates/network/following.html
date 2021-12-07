@@ -1,0 +1,26 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div style="margin: 10px 10px 10px 10px;">
+        <h1>All Posts</h1>
+        
+        <div id="posts" class="card">
+            <div class="card-body">
+                {% for posts in posts %}
+                    <ul>
+                         <li class="card"> 
+                            <div class="card-body">
+                                <h5 class="card-title"><a style="text-decoration: none;" href="{% url 'profile' posts.user.id %}">{{ posts.user }}</a></h5> 
+                                <h6 class="card-subtitle text-muted">{{ posts.timestamp }}</h6>
+                                <h3 class="card-text">{{ posts.post }}</h3>
+                            </div>
+                        </li>
+                    </ul>   
+                {% empty %}
+                    <h6>No post availabel 😔</h6>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}
