@@ -11,8 +11,10 @@ from .serializers import EditPostSerializer
 from .forms import NewPostForm
 from .models import User,NewPost,Profile
 import json
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-
+@api_view(['GET','POST'])
 def index(request):
     posts = NewPost.objects.all().order_by("-timestamp")
     
@@ -25,6 +27,7 @@ def index(request):
                 post = post.save(commit=False)
                 postdata = NewPost(post=post,user=user,timestamp=timestamp)
                 postdata.save()
+                return Response({"message" : "Post created successfully 😊!"})
 
             return render(request,"network/index.html",{
                 "post" : post,
