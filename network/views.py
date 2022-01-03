@@ -5,6 +5,9 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect 
 from django.urls import reverse
 from datetime import datetime
+from rest_framework.parsers import JSONParser
+from rest_framework import viewsets
+from .serializers import EditPostSerializer
 from .forms import NewPostForm
 from .models import User,NewPost,Profile
 import json

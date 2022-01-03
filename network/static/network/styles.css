@@ -11,6 +11,10 @@
     margin: 10px 10px 10px 10px;
 }
 
+.card-header-background{
+    background-color: rgb(102, 252, 182);
+}
+
 /* #posts ul{
     list-style: none;
 } */
