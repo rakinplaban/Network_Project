@@ -5,6 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Social Network{% endblock %}</title>
+        <script src="{% static 'network/controller.js' %}"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
         <link rel="icon" type="image" href="https://static.wikia.nocookie.net/ccs/images/8/89/Meiling_Li_Clear_Card_Arc.png/revision/latest?cb=20180408031809">
@@ -16,39 +17,39 @@
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     </head>
     <body>
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-success">
-            <a class="navbar-brand text-white" href="#">Network</a>
-          
-            <div>
-              <ul class="navbar-nav mr-auto">
-                {% if user.is_authenticated %}
+        <div class = "nabclass">
+            <nav class="navbar navbar-expand-lg navbar-light bg-success">
+                <a class="navbar-brand text-white" href="#">Network</a>
+            
+                <div>
+                  <ul class="navbar-nav mr-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'profile' request.user.id %}"><strong>{{ request.user.username }}</strong></a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="{% url 'profile' request.user.id %}"><strong>{{ request.user.username }}</strong></a>
+                      <a class="nav-link text-light" href="{% url 'index' %}">All Posts</a>
                     </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link text-light" href="{% url 'index' %}">All Posts</a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{% url 'following' %}">Following</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-              </ul>
-            </div>
-          </nav>
-        
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'following' %}">Following</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                  </ul>
+                </div>
+            </nav>
+        </div>
         <div class="body">
             {% block body %}
             {% endblock %}

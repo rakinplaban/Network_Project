@@ -4,10 +4,10 @@
     <div style="margin: 10px 10px 10px 10px;">
         <h1>All Posts</h1>
         {% if user.is_authenticated %}
-            <div class="border border-success" style="margin: 10px 10px 10px 10px;">
+            <div class="border border-success" style="margin: 10px 10px 10px 10px; position: relative;">
                 <div style="margin: 10px 10px 10px 10px;">
                     <h3>New Post</h3>
-                    <form action="{% url 'index' %}" method="POST">
+                    <form id="NewPostForm" action="{% url 'index' %}" method="POST">
                         {% csrf_token %} 
                         <div class="form-group">
                             <!-- <textarea name="post" class="form-control" cols="30" rows="5" placeholder="What is in your mind? "></textarea> -->
