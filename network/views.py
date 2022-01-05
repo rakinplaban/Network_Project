@@ -13,10 +13,15 @@ from .models import User,NewPost,Profile
 import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.core.paginator import Paginator
 
 @api_view(['GET','POST'])
 def index(request):
     posts = NewPost.objects.all().order_by("-timestamp")
+    page = Paginator(posts,2)
+    page_req = request.GET.get('page')
+    page_view = page.get_page(page_req)
+    num = "a" * page_view.paginator.num_pages
     
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -33,7 +38,9 @@ def index(request):
                 "post" : post,
                 "user" : user,
                 # "posts" : posts,
-                "timestamp" : timestamp
+                "timestamp" : timestamp,
+                "page_view" : page_view,
+                "num" : num,
             })
             # JsonResponse(posts, safe=False)
 
@@ -41,11 +48,15 @@ def index(request):
             post = NewPostForm()
             return render(request,"network/index.html",{
                 "post" : post,
-                "posts" : posts
+                "posts" : posts,
+                "page_view" : page_view,
+                "num" : num,
             })
 
     return render(request,"network/index.html",{
-        "posts" : posts
+        "posts" : posts,
+        "page_view" : page_view,
+        "num" : num,
     })
 
 

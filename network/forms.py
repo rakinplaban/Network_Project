@@ -12,7 +12,7 @@ class NewPostForm(forms.ModelForm):
                 "class" : "form-control",
                 "placeholder" : "What's in your mind?",
                 "cols" : 30,
-                "rows" : 5
+                "rows" : 3
             })
         }
 
