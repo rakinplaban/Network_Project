@@ -1,0 +1,20 @@
+{% extends 'network/layout.html' %}
+
+{% block body %}
+    <div style="margin: 70px 10px 10px 10px;">
+        <!-- <h1>Create New Post</h1> -->
+        <div class="border border-success" style="margin: 10px 10px 10px 10px; position: relative;">
+            <div style="margin: 10px 10px 10px 10px;">
+                <label>New post</label>
+                <form id="NewPostForm" action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ postform }}
+                    </div>
+                
+                    <input class="btn btn-success" type="Submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

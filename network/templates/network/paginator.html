@@ -1,0 +1,38 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page_view.has_previous %}
+            <li class="page-item">
+                <a class="page-link text-success" href="?page=1" tabindex="-1">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link text-success" href="?page={{ page_view.previous_page_number }}">&laquo; Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link text-success" href="#" tabindex="-1">Previous</a>
+            </li>
+        {% endif %}
+        {% for i in num %}   
+            {% if forloop.counter is page_view.number %}
+                <li class="page-item active bg-success">
+                    <a class="page-link bg-success" href="?page={{ page_view.number }}">{{ page_view.number }} <span class="sr-only">(current)</span></a>
+                </li>
+            {% else %} 
+                <li class="page-item"><a class="page-link text-success" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_view.has_next %} 
+            <li class="page-item">
+                <a class="page-link text-success" href="?page={{ page_view.next_page_number }}">Next &raquo;</a>
+            </li>
+        <!-- <a href="?page={{ page_view.next_page_number }}">Next</a> -->
+            <li class="page-item">
+                <a class="page-link text-success" href="?page={{ page_view.paginator.num_pages }}">Last</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link text-success" href="#">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

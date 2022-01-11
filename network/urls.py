@@ -12,5 +12,7 @@ urlpatterns = [
     path("profile/<int:id>",views.profilepage,name="profile"),
     path("profile/<int:id>/following/addfollower",views.followersPeople,name="addfollower"),
     path("profile/<int:id>/following/removefollower",views.followersRemove,name="removefollower"),
+    path("postform", views.createpost, name="postform"),
+    path("editform/<int:id>",views.editpost,name="editpost"),
     path("following",views.followerspost,name="following"),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

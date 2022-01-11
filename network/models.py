@@ -10,10 +10,14 @@ class User(AbstractUser):
 class NewPost(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     post = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add = True)
+    timestamp = models.DateTimeField(auto_now = True)
 
     def __str__(self):
         return f"{self.post}"
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    post = models.ForeignKey(NewPost, on_delete= models.CASCADE)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)

@@ -1,0 +1,12 @@
+<div class="card-footer">
+    {% if like %}
+        <button id = "like" class="btn btn-link" style="text-decoration: none; color:red" type="submit"><i class="fa fa-heart"></i></button>
+    {% else %} 
+        <button id = "like" class="btn btn-link" style="text-decoration: none; color:blue" type="submit"><i class="fa fa-heart"></i></button>
+    {% endif %}
+    <button class="btn btn-link" style="text-decoration: none;">Comment</button>
+    {% if request.user.id is posts.user.id %}
+        <a href="{% url 'editpost' id=posts.id %}" class="btn btn-link" style="text-decoration: none;">Edit {{ posts.id }}</a>
+       
+    {% endif %}
+</div>

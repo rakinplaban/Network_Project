@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect 
+from django.shortcuts import get_object_or_404, render, redirect 
 from django.urls import reverse
 from datetime import datetime
 from rest_framework.parsers import JSONParser
@@ -15,13 +16,16 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.paginator import Paginator
 
-@api_view(['GET','POST'])
+# @api_view(['GET','POST'])
 def index(request):
     posts = NewPost.objects.all().order_by("-timestamp")
-    page = Paginator(posts,2)
+    page = Paginator(posts,3)
     page_req = request.GET.get('page')
     page_view = page.get_page(page_req)
     num = "a" * page_view.paginator.num_pages
+    # like = False
+    # if posts.like.filter(id = request.user.id).exists():
+    #     like = True
     
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -32,7 +36,7 @@ def index(request):
                 post = post.save(commit=False)
                 postdata = NewPost(post=post,user=user,timestamp=timestamp)
                 postdata.save()
-                return Response({"message" : "Post created successfully 😊!"})
+                # return Response({"message" : "Post created successfully 😊!"})
 
             return render(request,"network/index.html",{
                 "post" : post,
@@ -41,6 +45,7 @@ def index(request):
                 "timestamp" : timestamp,
                 "page_view" : page_view,
                 "num" : num,
+                # "like" : like,
             })
             # JsonResponse(posts, safe=False)
 
@@ -51,14 +56,24 @@ def index(request):
                 "posts" : posts,
                 "page_view" : page_view,
                 "num" : num,
+                # "like" : like,
             })
 
     return render(request,"network/index.html",{
         "posts" : posts,
         "page_view" : page_view,
         "num" : num,
+        # "like" : like,
     })
 
+# def like(request,id):
+#     post = get_object_or_404(NewPost,id)
+
+#     if post.like.filter(id = request.user.id).exists():
+#         post.like.remove()
+#     else:
+#         post.like.add()
+#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 def login_view(request):
     if request.method == "POST":
@@ -111,6 +126,51 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+@login_required
+def createpost(request):
+    postform = NewPostForm()
+    if request.method == "POST":
+        post = NewPostForm(request.POST)
+        user = request.user.id
+        timestamp = datetime.now()
+        if post.is_valid:
+            post = post.save(commit=False)
+            postdata = post.save(post=post,user = user,timestamp = timestamp)
+            postdata.save()
+            return HttpResponseRedirect(reverse("index"))
+            # return Response({
+            #     "message":"Post successfully created 😊",
+            #     "post": post,
+            #     "user" : user,
+            #     "timestamp" : timestamp
+            # })
+
+    return render(request,"network/postform.html",{
+        "postform" : postform
+    })
+
+@login_required
+def editpost(request,id):
+    mainpost = get_object_or_404(NewPost,id = id)
+    postform = NewPostForm(instance = mainpost)
+    if request.method == "POST":
+        postform = NewPostForm(request.POST, instance= mainpost)
+        # user = request.user.id
+        timestamp = datetime.now()
+        if postform.is_valid():
+            postform.instance.timestamp = datetime.now()
+            postform.save()
+            return redirect("index")
+            # postdata = NewPost(id = id,post = post,timestamp = timestamp)
+            # postdata.save()
+            # return HttpResponseRedirect(reverse("index"))
+
+    return render(request,"network/editform.html",{
+        "postform" : postform,
+        "mainpost" : mainpost,
+        "id" : id,
+        # "timestamp" : timestamp
+    })
 
 def profilepage(request,id):
     user = User.objects.get(pk=id)
@@ -135,6 +195,10 @@ def profilepage(request,id):
     all_followers = len(followers)
     all_following = len(followings)
     posts = NewPost.objects.filter(user = user).order_by("-timestamp")
+    page = Paginator(posts,3)
+    page_req = request.GET.get('page')
+    page_view = page.get_page(page_req)
+    num = "a" * page_view.paginator.num_pages
     return render(request, "network/profile.html",{
         "user" : user,
         "profile" : profile,
@@ -143,7 +207,9 @@ def profilepage(request,id):
         "all_following" : all_following,
         "is_followed" : is_followed,
         "media_url" : settings.MEDIA_URL,
-        "posts" : posts
+        "posts" : posts,
+        "page_view" : page_view,
+        "num" : num,
     })
 
 # def followerCount(request,id):
@@ -175,10 +241,16 @@ def followerspost(request):
     #     posts = NewPost.objects.filter(user = following)
 
     posts = NewPost.objects.filter(user__in = followings).order_by("-timestamp")
+    page = Paginator(posts,3)
+    page_req = request.GET.get('page')
+    page_view = page.get_page(page_req)
+    num = "a" * page_view.paginator.num_pages
 
     return render(request,"network/following.html",{
         "user" : user,
         "profile" : profile,
         "followings" : followings,
         "posts" : posts,
+        "page_view" : page_view,
+        "num" : num,
     })
