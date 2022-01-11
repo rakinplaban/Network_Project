@@ -6,7 +6,7 @@
     {% endif %}
     <button class="btn btn-link" style="text-decoration: none;">Comment</button>
     {% if request.user.id is posts.user.id %}
-        <a href="{% url 'editpost' id=posts.id %}" class="btn btn-link" style="text-decoration: none;">Edit {{ posts.id }}</a>
+        <a href="{% url 'editpost' id=posts.id %}" class="btn btn-link" style="text-decoration: none;">Edit</a>
        
     {% endif %}
 </div>
