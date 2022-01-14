@@ -77,19 +77,15 @@ def likepost(request,id):
     
     else:
         post.likepost.remove(request.user)
-
-  
-
-    post.save()
     
-    # return JsonResponse({
-    #     "is_like" : is_like,
-    #     "like_num" : like_num
-    # })
-    
-    return render(request,"network/index.html",{
+    return JsonResponse({
         "is_like" : is_like,
     })
+    
+    # return render(request,"network/index.html",{
+    #     "is_like" : is_like,
+    #     "like_num" : like_num ,
+    # })
     
 
 def login_view(request):
