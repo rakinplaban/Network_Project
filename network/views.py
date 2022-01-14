@@ -23,9 +23,6 @@ def index(request):
     page_req = request.GET.get('page')
     page_view = page.get_page(page_req)
     num = "a" * page_view.paginator.num_pages
-    # like = False
-    # if posts.like.filter(id = request.user.id).exists():
-    #     like = True
     
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -40,7 +37,7 @@ def index(request):
 
             return render(request,"network/index.html",{
                 "post" : post,
-                "user" : user,
+                # "user" : user,
                 # "posts" : posts,
                 "timestamp" : timestamp,
                 "page_view" : page_view,
@@ -66,14 +63,34 @@ def index(request):
         # "like" : like,
     })
 
-# def like(request,id):
-#     post = get_object_or_404(NewPost,id)
+@login_required
+def likepost(request,id):
+    post = NewPost.objects.get(id = id)
+    is_like = False
+    for like in post.likepost.all():
+        if like == request.user and request.method == "POST":
+            is_like = True
+            break
+    
+    if not is_like:
+        post.likepost.add(request.user)
+    
+    else:
+        post.likepost.remove(request.user)
 
-#     if post.like.filter(id = request.user.id).exists():
-#         post.like.remove()
-#     else:
-#         post.like.add()
-#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+  
+
+    post.save()
+    
+    # return JsonResponse({
+    #     "is_like" : is_like,
+    #     "like_num" : like_num
+    # })
+    
+    return render(request,"network/index.html",{
+        "is_like" : is_like,
+    })
+    
 
 def login_view(request):
     if request.method == "POST":
@@ -155,21 +172,16 @@ def editpost(request,id):
     postform = NewPostForm(instance = mainpost)
     if request.method == "POST":
         postform = NewPostForm(request.POST, instance= mainpost)
-        # user = request.user.id
         timestamp = datetime.now()
         if postform.is_valid():
             postform.instance.timestamp = datetime.now()
             postform.save()
             return redirect("index")
-            # postdata = NewPost(id = id,post = post,timestamp = timestamp)
-            # postdata.save()
-            # return HttpResponseRedirect(reverse("index"))
 
     return render(request,"network/editform.html",{
         "postform" : postform,
         "mainpost" : mainpost,
         "id" : id,
-        # "timestamp" : timestamp
     })
 
 def profilepage(request,id):

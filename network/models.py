@@ -11,6 +11,7 @@ class NewPost(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     post = models.TextField()
     timestamp = models.DateTimeField(auto_now = True)
+    likepost = models.ManyToManyField(User, default=None, blank=True , related_name="likepost")
 
     def __str__(self):
         return f"{self.post}"

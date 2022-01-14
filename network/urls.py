@@ -15,4 +15,5 @@ urlpatterns = [
     path("postform", views.createpost, name="postform"),
     path("editform/<int:id>",views.editpost,name="editpost"),
     path("following",views.followerspost,name="following"),
+    path("index/<int:id>/like",views.likepost, name="like"),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
