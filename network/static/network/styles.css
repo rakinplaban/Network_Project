@@ -27,7 +27,10 @@
     color:blue;
     text-decoration: none; 
 }
-
+#num_of_likes{
+    color: blue;
+    font-weight: 700;
+}
 /* #posts ul{
     list-style: none;
 } */

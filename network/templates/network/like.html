@@ -12,11 +12,15 @@
         </form>
         <!-- <a href="http://google.com" id = "like" class="btn btn-link" style="text-decoration: none; color:blue" type="submit"><i class="fa fa-heart"></i></a> -->
     <!-- {% endif %} -->
-    <form action="{% url 'like' id=posts.id %}" method="POST" style="display: inline;">
+    <form action="{% url 'like' id=posts.id %}" id="likeform" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <button id = "like" class="btn btn-link" type="submit"><i class="fa fa-heart"></i></button>
+    </form>
+    <!-- <form action="{% url 'like' id=posts.id %}" method="POST" style="display: inline;" onsubmit="return false">
         {% csrf_token %}
         <button onclick="like_function(posts)" id = "like" class="btn btn-link" type="submit"><i class="fa fa-heart"></i> {{posts.id}}</button>
-    </form>
-    <small>{{ posts.likepost.all.count }}</small>
+    </form> -->
+    <small id="num_of_likes">{{ posts.likepost.all.count }}</small>
     <button class="btn btn-link" style="text-decoration: none;">Comment</button>
     {% if request.user.id is posts.user.id %}
         <a href="{% url 'editpost' id=posts.id %}" class="btn btn-link" style="text-decoration: none;">Edit</a>

@@ -220,11 +220,6 @@ def profilepage(request,id):
         "num" : num,
     })
 
-# def followerCount(request,id):
-#     profile = Profile.objects.get(pk = id)
-#     followers = profile.followers.all()
-#     all_followers = len(followers)
-
 def followersPeople(request,id):
     user = User.objects.get(pk = id)
     profile = Profile.objects.filter(user = user)
@@ -245,8 +240,6 @@ def followerspost(request):
     user = request.user
     profile = Profile.objects.filter(user = user)
     followings = user.profile.followings.all()
-    # for following in followings:
-    #     posts = NewPost.objects.filter(user = following)
 
     posts = NewPost.objects.filter(user__in = followings).order_by("-timestamp")
     page = Paginator(posts,3)
