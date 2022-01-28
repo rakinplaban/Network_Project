@@ -1,0 +1,25 @@
+{% extends 'network/layout.html' %}
+
+{% block body %} 
+
+    <div style="margin-bottom: 40px;"></div>
+    <div>
+        <h1>{{ post.user }}</h1>
+        <h6>{{ post.timestamp }}</h6>
+
+        <p>{{ post.post }}</p>
+    </div>
+    <div>
+        <form action="" id="likeform" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button id = "like" class="btn btn-link" type="submit"><i class="fa fa-heart"></i></button>
+        </form>
+        <small id="num_of_likes">{{ post.likepost.all.count }}</small>
+        <button class="btn btn-link" style="text-decoration: none;">Comment</button>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% url 'static/controller.js' %}" ></script>
+{% endblock %}

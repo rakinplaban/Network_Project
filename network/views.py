@@ -1,5 +1,7 @@
+from sqlite3 import Timestamp
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.db import IntegrityError
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -15,6 +17,7 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 
 # @api_view(['GET','POST'])
 def index(request):
@@ -64,23 +67,27 @@ def index(request):
     })
 
 @login_required
-def likepost(request,id):
-    post = NewPost.objects.get(id = id)
+@csrf_exempt
+def likepost(request,posts_id):
+    posts = NewPost.objects.get(id = posts_id)
     is_like = False
-    for like in post.likepost.all():
+    for like in posts.likepost.all():
         if like == request.user and request.method == "POST":
             is_like = True
             break
     
     if not is_like:
-        post.likepost.add(request.user)
+        posts.likepost.add(request.user)
     
     else:
-        post.likepost.remove(request.user)
+        posts.likepost.remove(request.user)
+
+    # serialize_obj = serializers.serialize("json",posts_id)
     
     return JsonResponse({
         "is_like" : is_like,
-    })
+        "num_like" : posts.likepost.count()
+    },safe=False)
     
     # return render(request,"network/index.html",{
     #     "is_like" : is_like,
@@ -254,4 +261,29 @@ def followerspost(request):
         "posts" : posts,
         "page_view" : page_view,
         "num" : num,
+    })
+
+def view_post(request,id):
+    post = NewPost.objects.get(id=id)
+    user = request.user
+    # timestamp = 
+    is_like = False
+    for like in post.likepost.all():
+        if like == request.user and request.method == "POST":
+            is_like = True
+            break
+    
+    if not is_like:
+        post.likepost.add(request.user)
+    
+    else:
+        post.likepost.remove(request.user)
+    
+    return JsonResponse({
+        "is_like" : is_like,
+        "like_num" : post.likepost.count()
+    })
+    return render(request,"network/postpage.html",{
+        "post" : post,
+        "user" : user,
     })
