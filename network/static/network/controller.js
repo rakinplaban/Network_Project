@@ -1,22 +1,28 @@
-document.addEventListener("DOMContentLoaded",function(){
-    document.querySelector('#like').addEventListener('click', ()=> like_function('like'));
+document.addEventListener("DOMContentLoaded",function(e){
+    // const colon = document.createElement('div');
+    // colon.setAttribute('id','colon')
+    e.preventDefault()
+    document.querySelector('.likepost').addEventListener('click', ()=> like_function('likepost'));
 })
 
 
 
-let is_like = "{{is_like}}";
-let num_like = "{{num_like}}";
+// let is_like = "{{is_like}}";
+// let num_like = "{{num_like}}";
 
-function like_function(like){
-    fetch(`/like/${posts_id}`,{
-        method:"POST",
-        body : JSON.stringify({
-            "is_like" : is_like,
-            "num_like" : num_like,
-        })
-    })
+function like_function(likepost){
+    document.createElement('button').innerHTML = "Love";
+    fetch(`/likepost/${posts_id}`)
+    // ,{
+    //     method:"POST",
+    //     body : JSON.stringify({
+    //         "is_like" : is_like,
+    //         "num_like" : num_like,
+    //     })
+    // })
     .then(response => response.json())
     .then(result => {
+        console.log("Updated.");
         if(result.is_like){
             document.querySelector('#like').innerHTML = "Unike";
         }
@@ -24,6 +30,7 @@ function like_function(like){
             document.querySelector('#like').innerHTML = "Like";
         }
     })
+    location.replace("http://127.0.0.1/")
 }
 
 // function like_function(){

@@ -17,7 +17,7 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_exempt
+
 
 # @api_view(['GET','POST'])
 def index(request):
@@ -67,7 +67,7 @@ def index(request):
     })
 
 @login_required
-@csrf_exempt
+
 def likepost(request,posts_id):
     posts = NewPost.objects.get(id = posts_id)
     is_like = False
@@ -81,7 +81,7 @@ def likepost(request,posts_id):
     
     else:
         posts.likepost.remove(request.user)
-
+    posts.save()
     # serialize_obj = serializers.serialize("json",posts_id)
     
     return JsonResponse({
@@ -91,7 +91,7 @@ def likepost(request,posts_id):
     
     # return render(request,"network/index.html",{
     #     "is_like" : is_like,
-    #     "like_num" : like_num ,
+    #     # "like_num" : like_num,
     # })
     
 
