@@ -22,7 +22,7 @@
         <div id="posts" class="card">
             <ul class="card-body">
                 {% for posts in page_view %}    
-                     <li class="card"> 
+                    <li class="card"> 
                          <div class="card-header bg-success">
                             <h5 class="card-title"><a class="text-light" style="text-decoration: none;" href="{% url 'profile' posts.user.id %}">{{ posts.user }}</a></h5> 
                             <h6 class="card-subtitle text-light">{{ posts.timestamp }}</h6>

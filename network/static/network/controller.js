@@ -2,7 +2,13 @@ document.addEventListener("DOMContentLoaded",function(e){
     // const colon = document.createElement('div');
     // colon.setAttribute('id','colon')
     e.preventDefault()
-    document.querySelector('.likepost').addEventListener('click', ()=> like_function('likepost'));
+    const likebtn = document.createElement('button');
+    likebtn.setAttribute('class','likebtn btn btn-primary');
+    // likebtn.setAttribute('class','likebtn');
+    document.querySelector('.card-footer').appendChild(likebtn);
+    document.querySelector('.likebtn').innerHTML = "Like";
+    document.querySelector('.likebtn').onclick = like_function();
+    // document.querySelector('.likepost').addEventListener('click', ()=> like_function('likepost'));
 })
 
 
@@ -10,8 +16,8 @@ document.addEventListener("DOMContentLoaded",function(e){
 // let is_like = "{{is_like}}";
 // let num_like = "{{num_like}}";
 
-function like_function(likepost){
-    document.createElement('button').innerHTML = "Love";
+function like_function(){
+    // document.createElement('button').innerHTML = "Love";
     fetch(`/likepost/${posts_id}`)
     // ,{
     //     method:"POST",
@@ -24,10 +30,10 @@ function like_function(likepost){
     .then(result => {
         console.log("Updated.");
         if(result.is_like){
-            document.querySelector('#like').innerHTML = "Unike";
+            document.querySelector('.like').innerHTML = "Unike";
         }
         else{
-            document.querySelector('#like').innerHTML = "Like";
+            document.querySelector('.like').innerHTML = "Like";
         }
     })
     location.replace("http://127.0.0.1/")

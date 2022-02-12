@@ -1,11 +1,11 @@
 {% load static %}
 <div class="card-footer">
    
-    <form action="{% url 'likepost' posts_id=posts.id %}" id="likeform" method="POST" style="display: inline;">
+    <form action="{% url 'likepost' posts_id=posts.id %}" class="likeform" method="POST" style="display: inline;">
         {% csrf_token %}
-        <button id = "like" class="btn btn-link" type="submit">Like</button>
+        <button class="like btn btn-link" type="submit">Like</button>
     </form>
-    <small id="num_of_likes">{{ posts.likepost.all.count }}</small>
+    <small class="num_of_likes">{{ posts.likepost.all.count }}</small>
     
     {% block script %} 
         <!-- <script>
