@@ -1,13 +1,18 @@
-document.addEventListener("DOMContentLoaded",function(e){
+document.addEventListener("DOMContentLoaded",function(){
     // const colon = document.createElement('div');
     // colon.setAttribute('id','colon')
-    e.preventDefault()
-    const likebtn = document.createElement('button');
-    likebtn.setAttribute('class','likebtn btn btn-primary');
+    // e.preventDefault()
+    // const likebtn = document.createElement('button');
+    // likebtn.setAttribute('class','likebtn btn btn-primary');
     // likebtn.setAttribute('class','likebtn');
-    document.querySelector('.card-footer').appendChild(likebtn);
-    document.querySelector('.likebtn').innerHTML = "Like";
-    document.querySelector('.likebtn').onclick = like_function();
+    // document.querySelector('.card-footer').appendChild(likebtn);
+    // document.querySelector('.likebtn').innerHTML = "Like";
+    
+    document.querySelector(`#likebtn${posts_id}`).addEventListener('click',(event) => {
+        event.preventDefault();
+        like_function();
+        return false;
+    })
     // document.querySelector('.likepost').addEventListener('click', ()=> like_function('likepost'));
 })
 
@@ -18,7 +23,8 @@ document.addEventListener("DOMContentLoaded",function(e){
 
 function like_function(){
     // document.createElement('button').innerHTML = "Love";
-    fetch(`/likepost/${posts_id}`)
+    // console.log("Updated!")
+    fetch(`/like/${posts_id}`)
     // ,{
     //     method:"POST",
     //     body : JSON.stringify({
@@ -28,15 +34,20 @@ function like_function(){
     // })
     .then(response => response.json())
     .then(result => {
-        console.log("Updated.");
         if(result.is_like){
-            document.querySelector('.like').innerHTML = "Unike";
+            console.log("function is liked");
+            console.log(`${result.is_like} for post ${posts_id}`);
+            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Unike";
+            // location.replace("http://127.0.0.1:8000")
         }
         else{
-            document.querySelector('.like').innerHTML = "Like";
+            console.log("function is unliked, back off!");
+            console.log(`${result.is_like} for post ${posts_id}`);
+            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Like";
+            // location.replace("http://127.0.0.1:8000")
         }
     })
-    location.replace("http://127.0.0.1/")
+    
 }
 
 // function like_function(){

@@ -87,7 +87,7 @@ def likepost(request,posts_id):
     return JsonResponse({
         "is_like" : is_like,
         "num_like" : posts.likepost.count()
-    },safe=False)
+    },safe=200)
     
     # return render(request,"network/index.html",{
     #     "is_like" : is_like,

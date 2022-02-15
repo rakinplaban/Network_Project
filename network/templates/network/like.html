@@ -3,14 +3,14 @@
    
     <form action="{% url 'likepost' posts_id=posts.id %}" class="likeform" method="POST" style="display: inline;">
         {% csrf_token %}
-        <button class="like btn btn-link" type="submit">Like</button>
+        <button id="likebtn{{posts.id}}" class="btn btn-link" type="submit">Like</button>
     </form>
-    <small class="num_of_likes">{{ posts.likepost.all.count }}</small>
+    <small id="num_of_likes_{{posts.id}}" class="num_of_likes">{{ posts.likepost.all.count }}</small>
     
     {% block script %} 
-        <!-- <script>
+        <script>
             let posts_id = "{{ posts.id }}";
-        </script> -->
+        </script>
         <script src="{% static 'network/controller.js' %}"></script>
     {% endblock %}
     <button class="btn btn-link" style="text-decoration: none;">Comment</button>
