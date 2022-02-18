@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded",function(){
     // document.querySelector('.card-footer').appendChild(likebtn);
     // document.querySelector('.likebtn').innerHTML = "Like";
     
-    document.querySelector(`#likebtn${posts_id}`).addEventListener('click',(event) => {
+    document.querySelector(`#likeform${posts_id}`).addEventListener('submit',(event) => {
         event.preventDefault();
         like_function();
-        return false;
+        // return false;
     })
     // document.querySelector('.likepost').addEventListener('click', ()=> like_function('likepost'));
 })
@@ -37,13 +37,13 @@ function like_function(){
         if(result.is_like){
             console.log("function is liked");
             console.log(`${result.is_like} for post ${posts_id}`);
-            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Unike";
+            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Like";
             // location.replace("http://127.0.0.1:8000")
         }
         else{
             console.log("function is unliked, back off!");
             console.log(`${result.is_like} for post ${posts_id}`);
-            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Like";
+            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Unlike";
             // location.replace("http://127.0.0.1:8000")
         }
     })
