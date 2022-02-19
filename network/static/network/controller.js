@@ -24,14 +24,13 @@ document.addEventListener("DOMContentLoaded",function(){
 function like_function(){
     // document.createElement('button').innerHTML = "Love";
     // console.log("Updated!")
-    fetch(`/like/${posts_id}`)
-    // ,{
-    //     method:"POST",
-    //     body : JSON.stringify({
-    //         "is_like" : is_like,
-    //         "num_like" : num_like,
-    //     })
-    // })
+    fetch(`/like/${posts_id}`,{
+        method:"POST",
+        body : JSON.stringify({
+            "is_like" : is_like,
+            "num_like" : num_like,
+        })
+    })
     .then(response => response.json())
     .then(result => {
         if(result.is_like){

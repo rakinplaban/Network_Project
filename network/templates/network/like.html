@@ -2,7 +2,7 @@
 <div class="card-footer">
    
     <form action="{% url 'likepost' posts_id=posts.id %}" id="likeform{{posts.id}}" method="POST" style="display: inline;">
-        {% csrf_token %}
+        <!-- {% csrf_token %} -->
         <button id="likebtn{{posts.id}}" class="btn btn-link" type="submit">Like</button>
     </form>
     <small id="num_of_likes_{{posts.id}}" class="num_of_likes">{{ posts.likepost.all.count }}</small>
@@ -10,6 +10,8 @@
     {% block script %} 
         <script>
             let posts_id = "{{ posts.id }}";
+            let is_like = "{{is_like}}";
+            let num_like = "{{num_like}}";
         </script>
         <script src="{% static 'network/controller.js' %}"></script>
     {% endblock %}
