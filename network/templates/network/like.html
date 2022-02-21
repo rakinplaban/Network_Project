@@ -1,17 +1,23 @@
 {% load static %}
-<div class="card-footer">
-   
-    <form action="{% url 'likepost' posts_id=posts.id %}" id="likeform{{posts.id}}" method="POST" style="display: inline;">
-        <!-- {% csrf_token %} -->
-        <button id="likebtn{{posts.id}}" class="btn btn-link" type="submit">Like</button>
-    </form>
+<div id="likeapost{{posts.id}}" class="card-footer">
+    {% if request.user in posts.likepost.all %}
+        <form action="{% url 'likepost' posts_id=posts.id %}" id="likeform{{posts.id}}" method="POST" style="display: inline;">
+            <!-- {% csrf_token %} -->
+            <button id="likebtn{{posts.id}}" class="btn btn-link" type="submit">Unlike</button>
+        </form>
+    {% else %} 
+        <form action="{% url 'likepost' posts_id=posts.id %}" id="likeform{{posts.id}}" method="POST" style="display: inline;">
+            <!-- {% csrf_token %} -->
+            <button id="likebtn{{posts.id}}" class="btn btn-link" type="submit">Like</button>
+        </form>
+    {% endif %}
     <small id="num_of_likes_{{posts.id}}" class="num_of_likes">{{ posts.likepost.all.count }}</small>
     
     {% block script %} 
         <script>
-            let posts_id = "{{ posts.id }}";
-            let is_like = "{{is_like}}";
-            let num_like = "{{num_like}}";
+            posts_id = "{{ posts.id }}";
+            is_like = "{{is_like}}";
+            num_like = "{{ posts.likepost.all.count }}";
         </script>
         <script src="{% static 'network/controller.js' %}"></script>
     {% endblock %}
@@ -21,7 +27,7 @@
         <a href="{% url 'editpost' id=posts.id %}" class="btn btn-link" style="text-decoration: none;">Edit</a>
        
     {% endif %}
-    <div class="likepost"></div>
+    <!-- <div class="likepost"></div> -->
 </div>
 
 

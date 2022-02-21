@@ -36,13 +36,23 @@ function like_function(){
         if(result.is_like){
             console.log("function is liked");
             console.log(`${result.is_like} for post ${posts_id}`);
-            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Like";
+            let num_like = result.num_like;
+            console.log(`Number of posts : ${num_like}`);
+            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Unlike";
+            num_like = num_like + 1;
+            console.log(`Number of posts : ${num_like}`);
+            document.querySelector(`#num_of_likes_${posts_id}`).innerHTML = `${num_like} `
             // location.replace("http://127.0.0.1:8000")
         }
         else{
             console.log("function is unliked, back off!");
             console.log(`${result.is_like} for post ${posts_id}`);
-            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Unlike";
+            let num_like = result.num_like;
+            console.log(`Number of posts : ${num_like}`);
+            document.querySelector(`#likebtn${posts_id}`).innerHTML = "Like";
+            num_like = num_like - 1;
+            console.log(`Number of posts : ${num_like}`);
+            document.querySelector(`#num_of_likes_${posts_id}`).innerHTML = `${num_like} `
             // location.replace("http://127.0.0.1:8000")
         }
     })
