@@ -1,3 +1,4 @@
+from re import template
 from sqlite3 import Timestamp
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -18,6 +19,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
+from django import template
+register = template.Library()
 
 # @api_view(['GET','POST'])
 def index(request):
@@ -68,6 +71,7 @@ def index(request):
 
 @login_required
 @csrf_exempt
+@register.inclusion_tag("network/like.html")
 def likepost(request,posts_id):
     posts = NewPost.objects.get(id = posts_id)
     is_like = False
