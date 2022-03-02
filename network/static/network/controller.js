@@ -1,21 +1,13 @@
 document.addEventListener("DOMContentLoaded",function(){
-    // const colon = document.createElement('div');
-    // colon.setAttribute('id','colon')
-    // e.preventDefault()
-    // const likebtn = document.createElement('button');
-    // likebtn.setAttribute('class','likebtn btn btn-primary');
-    // likebtn.setAttribute('class','likebtn');
-    // document.querySelector('.card-footer').appendChild(likebtn);
-    // document.querySelector('.likebtn').innerHTML = "Like";
     
-    document.querySelectorAll(`#likeform${posts_id}`).forEach(e =>{
+    document.querySelectorAll('[id^="#likeform"]').forEach(e =>{
         e.addEventListener('submit',(event) => {
             event.preventDefault();
             like_function();
             // return false;
         });
     });
-    // document.querySelector('.likepost').addEventListener('click', ()=> like_function('likepost'));
+    
 })
 
 

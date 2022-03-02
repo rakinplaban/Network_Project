@@ -1,7 +1,7 @@
 {% load static %}
 <div id="likeapost{{posts.id}}" class="card-footer">
     {% if request.user in posts.likepost.all %}
-        <form action="{% url 'likepost' posts_id=posts.id %}" class="likeform{{posts.id}}" method="POST" style="display: inline;">
+        <form action="{% url 'likepost' posts_id=posts.id %}" id="likeform{{posts.id}}" method="POST" style="display: inline;">
             <!-- {% csrf_token %} -->
             <button id="likebtn{{posts.id}}" class="btn btn-link" type="submit">Unlike</button>
         </form>
