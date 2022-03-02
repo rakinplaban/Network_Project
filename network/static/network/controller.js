@@ -8,22 +8,19 @@ document.addEventListener("DOMContentLoaded",function(){
     // document.querySelector('.card-footer').appendChild(likebtn);
     // document.querySelector('.likebtn').innerHTML = "Like";
     
-    document.querySelector(`#likeform${posts_id}`).addEventListener('submit',(event) => {
-        event.preventDefault();
-        like_function();
-        // return false;
-    })
+    document.querySelectorAll(`#likeform${posts_id}`).forEach(e =>{
+        e.addEventListener('submit',(event) => {
+            event.preventDefault();
+            like_function();
+            // return false;
+        });
+    });
     // document.querySelector('.likepost').addEventListener('click', ()=> like_function('likepost'));
 })
 
 
 
-// let is_like = "{{is_like}}";
-// let num_like = "{{num_like}}";
-
 function like_function(){
-    // document.createElement('button').innerHTML = "Love";
-    // console.log("Updated!")
     fetch(`/like/${posts_id}`,{
         method:"POST",
         body : JSON.stringify({
@@ -58,11 +55,3 @@ function like_function(){
     })
     
 }
-
-// function like_function(){
-//     if (document.querySelector("#like").style.color == "blue"){
-//         document.querySelector("#like").style.color = "red";
-//     }else{
-//         document.querySelector("#like").style.color = "blue";
-//     }
-// }
