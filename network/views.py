@@ -283,10 +283,10 @@ def view_post(request,id):
     else:
         post.likepost.remove(request.user)
     
-    return JsonResponse({
-        "is_like" : is_like,
-        "like_num" : post.likepost.count()
-    })
+    # return JsonResponse({
+    #     "is_like" : is_like,
+    #     "like_num" : post.likepost.count()
+    # })
     return render(request,"network/postpage.html",{
         "post" : post,
         "user" : user,

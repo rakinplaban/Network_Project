@@ -27,8 +27,8 @@
         </script>
         <script src="{% static 'network/controller.js' %}"></script>
     {% endblock %}
-    <button class="btn btn-link" style="text-decoration: none;">Comment</button>
-    <a href="{% url 'postpage' id=posts.id %}" class="btn btn-link" style="text-decoration: none;">View Post</a>
+    
+
     {% if request.user.id is posts.user.id %}
         <a href="{% url 'editpost' id=posts.id %}" class="btn btn-link" style="text-decoration: none;">Edit</a>
        
