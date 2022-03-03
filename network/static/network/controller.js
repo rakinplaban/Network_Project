@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded",function(){
     
-    document.querySelectorAll('[id^="#likeform"]').forEach(e =>{
+    document.querySelectorAll("[data-posts-id]").forEach(e =>{
         e.addEventListener('submit',(event) => {
             event.preventDefault();
-            like_function();
+            like_function(e.getAttribute("data-posts-id"));
             // return false;
         });
     });
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
 
-function like_function(){
+function like_function(posts_id){
     fetch(`/like/${posts_id}`,{
         method:"POST",
         body : JSON.stringify({
