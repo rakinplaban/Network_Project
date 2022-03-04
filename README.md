@@ -9,4 +9,4 @@ A twitter like social networking app. Only for educational purpose.
 - Pagination
 - Edit Post
 - “Like” and “Unlike”
-App link: https://shrouded-peak-41747.herokuapp.com/
+\App link: https://shrouded-peak-41747.herokuapp.com/
