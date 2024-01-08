@@ -6,8 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
-# Migrations
+# Ignore everything
+*
+
+# Allow migrations
 !*/migrations/
+
 
 # Distribution / packaging
 .Python
