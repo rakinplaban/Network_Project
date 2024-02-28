@@ -10,4 +10,4 @@ A twitter like social networking app. Only for educational purpose.
 - Edit Post
 - “Like” and “Unlike”
 \
-**App link:** https://shrouded-peak-41747.herokuapp.com/
+**App link:** https://network-project-5q7j.onrender.com/
