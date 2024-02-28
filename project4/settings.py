@@ -83,14 +83,15 @@ WSGI_APPLICATION = 'project4.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        'PASSWORD': 'qnr63363'
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    # {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'postgres',
+    #     'USER': 'postgres',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
+    #     'PASSWORD': 'qnr63363'
+    # }
 }
 
 AUTH_USER_MODEL = "network.User"
