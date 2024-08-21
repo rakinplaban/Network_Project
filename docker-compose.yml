@@ -1,0 +1,21 @@
+version: "3.11"
+
+services:
+  db_social:
+    image: postgres
+    volumes:
+      - ./data/db_social:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=social 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=qnr63363
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db_social
