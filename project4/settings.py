@@ -28,7 +28,7 @@ SECRET_KEY = '13kl@xtukpwe&xj2xoysxe9_6=tf@f8ewxer5n&ifnd46+6$%8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0','localhost','127.0.0.1']
 
 
 # Application definition
@@ -83,7 +83,14 @@ WSGI_APPLICATION = 'project4.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'social',
+        'USER': 'postgres',
+        'PASSWORD': 'qnr63363',
+        'HOST': 'db_social',  
+        'PORT': '5432',
+    }
     # {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'postgres',
