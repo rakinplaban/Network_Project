@@ -85,21 +85,32 @@ WSGI_APPLICATION = 'project4.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'social',
-        'USER': 'postgres',
-        'PASSWORD': 'qnr63363',
-        'HOST': 'db_social',  
-        'PORT': '5432',
+        'NAME': os.getenv('DATABASE_NAME', 'social'),
+        'USER': os.getenv('DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'qnr63363'),
+        'HOST': os.getenv('DATABASE_HOST', 'db_social'),  # Update this to use an environment variable
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
     }
-    # {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'postgres',
-    #     'USER': 'postgres',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '5432',
-    #     'PASSWORD': 'qnr63363'
-    # }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'social',
+#         'USER': 'postgres',
+#         'PASSWORD': 'qnr63363',
+#         'HOST': 'db_social',  
+#         'PORT': '5432',
+#     }
+#     # {
+#     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#     #     'NAME': 'postgres',
+#     #     'USER': 'postgres',
+#     #     'HOST': '127.0.0.1',
+#     #     'PORT': '5432',
+#     #     'PASSWORD': 'qnr63363'
+#     # }
+# }
 
 AUTH_USER_MODEL = "network.User"
 
