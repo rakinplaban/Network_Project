@@ -3,6 +3,7 @@ version: "3.11"
 services:
   db_social:
     image: postgres
+    container_name: db_social
     volumes:
       - ./data/db_social:/var/lib/postgresql/data
     environment:
