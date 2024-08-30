@@ -3,7 +3,6 @@ version: "3.11"
 services:
   db_social:
     image: postgres
-    container_name: db_social
     volumes:
       - ./data/db_social:/var/lib/postgresql/data
     environment:
@@ -13,7 +12,7 @@ services:
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn project4.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
