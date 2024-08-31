@@ -10,6 +10,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=qnr63363
 
+    ports:
+      - "5432:5432"
+
   web:
     build: .
     command: gunicorn project4.wsgi:application --bind 0.0.0.0:8000
