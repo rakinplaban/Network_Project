@@ -85,13 +85,25 @@ WSGI_APPLICATION = 'project4.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME', 'social'),
-        'USER': os.getenv('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'qnr63363'),
-        'HOST': os.getenv('DATABASE_HOST', 'db_social'),  # Update this to use an environment variable
-        'PORT': os.getenv('DATABASE_PORT', '5432'),
+        'NAME': 'social',
+        'USER': 'postgres',
+        'PASSWORD': 'qnr63363',
+        'HOST': 'db_social',
+        'PORT': '5432',
+    },
+
+    'live':{
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.kzeupmxxvcopfuikggji',
+        'PASSWORD': '2BUWwWuxWcZefeG9',
+        'HOST': 'aws-0-us-east-1.pooler.supabase.com',
+        'PORT': '6543',
     }
 }
+
+DATABASES['default'] = DATABASES['live'] if os.getenv('USE_LIVE_DB') == 'true' else DATABASES['default']
+
 
 # DATABASES = {
 #     'default': {
