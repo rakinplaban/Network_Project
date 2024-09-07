@@ -82,6 +82,8 @@ WSGI_APPLICATION = 'project4.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+USE_LIVE_DB = os.getenv('USE_LIVE_DB', 'False') == 'True'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -102,7 +104,9 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = DATABASES['live'] if os.getenv('USE_LIVE_DB') == 'true' else DATABASES['default']
+# DATABASES['default'] = DATABASES['live'] if os.getenv('USE_LIVE_DB') == 'true' else DATABASES['default']
+if USE_LIVE_DB:
+    DATABASES['default'] = DATABASES['live']
 
 
 # DATABASES = {
