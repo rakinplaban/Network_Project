@@ -1,16 +1,23 @@
-# Network_Project
-A twitter like social networking app. Only for educational purpose.
-\
-**Features:**
-- New Post
-- All Posts
-- Profile Page
-- Following
-- Pagination
-- Edit Post
-- “Like” and “Unlike”
-\
-**App link:** https://network-project-5q7j.onrender.com/
+# Social Networking App
+
+### Overview
+This project is a feature-rich, Twitter-inspired social networking application, developed for educational and learning purposes. It serves as a practical demonstration of how to build a modern, interactive platform with functionalities commonly found in social media.
+
+### Key Features
+
+- *Create New Posts:* Easily share your thoughts or ideas with others through a user-friendly interface.
+- *Explore All Posts:* Discover posts from users across the platform, ensuring a connected and engaging experience.
+- *User Profile Pages:* Every user gets a dedicated profile page displaying their posts and basic information, making it easier to personalize the platform.
+- *Follow/Unfollow Functionality:* Stay updated by following your favorite users or curate your feed by unfollowing when needed.
+- *Post Pagination:* Efficiently navigate through large volumes of content with smooth and dynamic pagination.
+- *Edit Posts:* Modify your existing posts effortlessly to keep your content updated and relevant.
+- *Like/Unlike Posts:* Interact with others' posts by liking or unliking them, fostering engagement and interaction.
+
+### Purpose
+This application is designed solely for educational purposes. It highlights key concepts in web development, including database interactions, user management, and dynamic content rendering, using modern frameworks and best practices.
+
+### Disclaimer
+This is not a production-ready application and is intended for demonstration and learning.
 
 
 ## Prerequisites
